@@ -1,5 +1,5 @@
-# DeepStream AI Inference Metadata Visualization
-A project to visualize DeepStream AI inference metadata with Kibana. 
+# DeepStream AI Inference Metadata Visualization Dashboard
+A project to visualize DeepStream AI inference metadata with Kibana and build dashboards. 
 
 Inference Device: Nvidia Jetson Nano
 
