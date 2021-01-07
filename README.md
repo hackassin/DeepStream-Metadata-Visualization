@@ -4,7 +4,7 @@ A Project to Visualize DeepStream inference metadata with Kibana.
 Inference Device: Nvidia Jetson Nano
 
 ## Technologies Leveraged
-1. ####Nvidia DeepStream SDK: Streaming Analytics toolkit that provides an end-to-end AI inference pipeline both for discrete GPUs and the Jetson Edge AI devices. 
+1. #### Nvidia DeepStream SDK: Streaming Analytics toolkit that provides an end-to-end AI inference pipeline both for discrete GPUs and the Jetson Edge AI devices. 
 Documentation: https://developer.nvidia.com/deepstream-sdk
 Video Tutorial: https://www.youtube.com/watch?v=Zxyf_NazIqw
 
