@@ -39,28 +39,40 @@ sudo yum install java
 1. Login to your AWS instance with Putty where you are going to run Kafka. 
 
 2. To install Kafka run these commands:
-	wget http://apachemirror.wuchna.com/kafka/2.6.0/kafka_2.13-2.6.0.tgz
+	```
+  wget http://apachemirror.wuchna.com/kafka/2.6.0/kafka_2.13-2.6.0.tgz
 	tar xvf kafka_2.13-2.6.0.tgz
+  ```
 
-3. Navigate to kafka directory. We need to add internal and external listeners. Add listensers in server.properties file available in bin/config. 
+3. Navigate to kafka directory. We need to add internal and external listeners. Add listensers in server.properties file available in bin/config.
+``` 
 listeners=INTERNAL://0.0.0.0:19092,EXTERNAL://0.0.0.0:9092
 listener.security.protocol.map=INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
 advertised.listeners=INTERNAL://ec2-3-137-212-227.us-east-2.compute.amazonaws.com:19092,EXTERNAL://ec2-3-137-212-227.us-east-2.compute.amazonaws.com:9092
 inter.broker.listener.name=INTERNAL
+```
 
 4. We will need to run Zookeper which will serve as the backend host for Kafka. Start Zookeeper with this command:
+```
 ./bin/zookeeper-server-start.sh ./config/zookeeper.properties
+```
 
 5. Start kafka
+```
 export KAFKA_HEAP_OPTS="-Xmx500M -Xms500M"
 ./bin/kafka-server-start.sh ./config/server.properties
+```
 
 6. Create topic
+```
 bin/kafka-topics.sh --create --topic test --bootstrap-server localhost:9092
+```
 
 7. Start Kafka producer and consumer [Optional]
+```
 ./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test
 ./kafka-console-producer.sh --bootstrap-server localhost:9092 --topic test
+```
 
 8. Download kafka tool
 -- Provide cluster name
@@ -72,7 +84,7 @@ bin/kafka-topics.sh --create --topic test --bootstrap-server localhost:9092
 Steps (Windows):
 1. Download logstash zip file (v 6.8 requires Java v8) : https://www.elastic.co/downloads/past-releases/logstash-6-8-8
 2. Modify the sample config file in config folder (Refer above JSON for input)
-
+```
 input {
   kafka {
     bootstrap_servers => "3.137.221.168:9092"
@@ -92,38 +104,48 @@ output {
 
 3. Launch .bat file in bin folder
 .\logstash.bat -f ..\config\test.conf
-
+```
 For Linux users: 
 
 ## Setting up Elastic Search
 1. Download .rpm package and install manually
+```
 wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.9.1-x86_64.rpm
 wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.9.1-x86_64.rpm.sha512
 shasum -a 512 -c elasticsearch-7.9.1-x86_64.rpm.sha512 
 sudo rpm --install elasticsearch-7.9.1-x86_64.rpm
+```
 
 2. Modifying heap_size
+```
 export _JAVA_OPTIONS="-Xms500m"
 export _JAVA_OPTIONS="-Xmx500m"
 java -XshowSettings:vm #Pick up jvm settings
+```
 Modify heap size to 500m in etc/elasticsearch/jvm.options file
 
 3. Modify host url in .yml file in etc/elasticsearch
+```
 network.host: 0.0.0.0
 discovery.type: single-node
+```
 
 4. Start elasticsearch
+```
 Enable systemctl
 sudo systemctl start elasticsearch.service
+```
 
 5. To check status
+```
 sudo systemctl status elasticsearch.service
 Check in ec2publicip:9200 on any browser
+```
 
 ## Setting up Kibana
 
 1. In yum.repos.d/amzn2-extras.repo, add this:
-
+```
 [kibana-7.x]
 name=Kibana repository for 7.x packages
 baseurl=https://artifacts.elastic.co/packages/7.x/yum
@@ -132,29 +154,32 @@ gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
 enabled=1
 autorefresh=1
 type=rpm-md
-
+```
 2. After the changes:
-
+```
 sudo yum install kibana
-
+```
 3. Modifying and starting Kibana
 
 Navigate to etc/kibana
-
+```
 vi kibana.yml
-
+```
 Make these changes:
+```
 server.port: 5601
 elasticsearch.hosts: "http://<ec2publicip>:9200"
-
+```
 4. Start Kibana
+```
 sudo service kibana start
-or 
+# or 
 sudo systemctl start kibana.service
-
+```
 Note: To stop Kibana
+```
 sudo service kibana stop
-
+```
 ## Launching DeepStream Application
 
 
