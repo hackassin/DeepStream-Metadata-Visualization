@@ -39,7 +39,7 @@ sudo yum install java
 1. Login to your AWS instance with Putty where you are going to run Kafka. 
 
 2. To install Kafka run these commands:
-  wget http://apachemirror.wuchna.com/kafka/2.6.0/kafka_2.13-2.6.0.tgz
+  wget https://archive.apache.org/dist/kafka/2.6.0/kafka_2.13-2.6.0.tgz
 	tar xvf kafka_2.13-2.6.0.tgz
 
 3. Navigate to kafka directory. We need to add internal and external listeners. Add listensers in server.properties file available in bin/config.
